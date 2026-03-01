@@ -155,8 +155,43 @@ export default function Hero() {
               </svg>
             </div>
           </MagneticButton>
+          {/* Resume download */}
+          <MagneticButton href="/resume.pdf" strength={0.2} download>
+            <div className="group relative overflow-hidden rounded-full border border-[rgba(168,255,0,0.4)] px-6 py-3.5 transition-[border-color,box-shadow] duration-300 hover:border-[--color-accent] hover:shadow-[0_0_20px_rgba(168,255,0,0.15)]">
+              {/* Liquid fill */}
+              <span className="pointer-events-none absolute inset-0 origin-bottom scale-y-0 rounded-full bg-[--color-accent] transition-transform duration-[380ms] ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-y-100" />
+              {/* Scan line inside fill */}
+              <span
+                className="pointer-events-none absolute left-0 h-[1.5px] w-full opacity-0 group-hover:opacity-100 bg-[rgba(5,5,5,0.12)]"
+                style={{ animation: "scan 1.4s linear infinite" }}
+              />
+              {/* Content */}
+              <span className="relative flex items-center gap-2.5">
+                <svg
+                  className="h-3.5 w-3.5 text-[--color-accent] transition-[color,transform] duration-300 group-hover:text-[--color-bg] group-hover:translate-y-[2px]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3"
+                  />
+                </svg>
+                <span
+                  className="text-xs font-medium uppercase tracking-widest text-[--color-accent] transition-colors duration-300 group-hover:text-[--color-bg]"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Résumé
+                </span>
+              </span>
+            </div>
+          </MagneticButton>
+
           <MagneticButton
-            href="https://github.com/mushrashid"
+            href="https://github.com/generalnel"
             strength={0.2}
           >
             <div className="glass flex items-center gap-2 rounded-full px-6 py-3.5 transition-all duration-150 hover:border-[rgba(255,255,255,0.12)]">

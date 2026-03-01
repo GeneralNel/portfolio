@@ -102,7 +102,7 @@ export default function Contact() {
             </MagneticButton>
 
             <MagneticButton
-              href="https://github.com/mushrashid"
+              href="https://github.com/generalnel"
               strength={0.2}
             >
               <div className="glass flex items-center gap-2 rounded-full px-6 py-4 transition-all duration-150 hover:border-[rgba(255,255,255,0.12)]">

@@ -9,6 +9,7 @@ interface MagneticButtonProps {
   onClick?: () => void;
   href?: string;
   strength?: number;
+  download?: boolean;
 }
 
 export default function MagneticButton({
@@ -17,6 +18,7 @@ export default function MagneticButton({
   onClick,
   href,
   strength = 0.3,
+  download,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -57,7 +59,12 @@ export default function MagneticButton({
 
   if (href) {
     return (
-      <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+      <a
+        href={href}
+        target={href.startsWith("http") ? "_blank" : undefined}
+        rel="noopener noreferrer"
+        download={download || undefined}
+      >
         {content}
       </a>
     );
