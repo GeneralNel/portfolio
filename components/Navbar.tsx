@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import MagneticButton from "./MagneticButton";
 
 const navItems = [
@@ -14,11 +14,8 @@ const navItems = [
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 1500);
-
     const handleScroll = () => {
       const sections = navItems.map((item) => item.href.slice(1));
       const scrollY = window.scrollY + window.innerHeight / 2;
@@ -33,10 +30,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleClick = (href: string) => {
@@ -47,16 +41,13 @@ export default function Navbar() {
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
         <motion.nav
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
-          className="fixed bottom-6 left-1/2 z-[100] -translate-x-1/2"
+          transition={{ duration: 0.6, delay: 1.5, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] }}
+          className="fixed bottom-6 left-1/2 z-[100] -translate-x-1/2 max-w-[calc(100vw-1.5rem)]"
         >
-          <div className="glass-strong flex items-center gap-1 rounded-full px-2 py-2 shadow-2xl shadow-black/50">
+          <div className="glass-strong flex items-center gap-0.5 rounded-full px-1.5 py-1.5 shadow-2xl shadow-black/50 sm:gap-1 sm:px-2 sm:py-2">
             {navItems.map((item) => (
               <MagneticButton
                 key={item.href}
@@ -64,7 +55,7 @@ export default function Navbar() {
                 onClick={() => handleClick(item.href)}
               >
                 <motion.div
-                  className={`relative rounded-full px-4 py-2 text-[11px] font-medium tracking-wider uppercase transition-colors duration-150 ${
+                  className={`relative rounded-full px-3 py-1.5 text-[10px] font-medium tracking-wider uppercase transition-colors duration-150 sm:px-4 sm:py-2 sm:text-[11px] ${
                     activeSection === item.href.slice(1)
                       ? "text-[#050505]"
                       : "text-[#888] hover:text-[#ccc]"
@@ -89,7 +80,5 @@ export default function Navbar() {
             ))}
           </div>
         </motion.nav>
-      )}
-    </AnimatePresence>
   );
 }
