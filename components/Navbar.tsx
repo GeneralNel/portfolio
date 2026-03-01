@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import MagneticButton from "./MagneticButton";
 
 const navItems = [
   { label: "Home", href: "#hero" },
@@ -30,39 +29,68 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleClick = (href: string) => {
     const el = document.querySelector(href);
-    if (el) {
+    if (!el) return;
+
+    if (window.__lenis) {
+      window.__lenis.scrollTo(el as HTMLElement, { offset: -50 });
+    } else {
       el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-        <motion.nav
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.5, ease: [0.25, 0.4, 0.25, 1] as [number, number, number, number] }}
-          className="fixed bottom-6 left-1/2 z-[100] -translate-x-1/2 max-w-[calc(100vw-1.5rem)]"
+    <div
+      className="fixed top-0 left-0 z-[100] flex items-end justify-center pointer-events-none"
+      style={{ width: "100vw", height: "100svh" }}
+    >
+      <nav
+        className="pointer-events-auto mb-8 sm:mb-8 max-w-[calc(100vw-1.5rem)]"
+        style={{
+          WebkitTapHighlightColor: "transparent",
+          userSelect: "none",
+          WebkitUserSelect: "none" as unknown as string,
+          touchAction: "manipulation",
+        }}
+      >
+        <div
+          className="flex items-center gap-0.5 rounded-full px-1.5 py-1.5 shadow-2xl shadow-black/50 sm:gap-1 sm:px-2 sm:py-2"
+          style={{
+            background: "rgba(10, 10, 10, 0.85)",
+            backdropFilter: "blur(40px)",
+            WebkitBackdropFilter: "blur(40px)",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
+            boxShadow:
+              "0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06)",
+          }}
         >
-          <div className="glass-strong flex items-center gap-0.5 rounded-full px-1.5 py-1.5 shadow-2xl shadow-black/50 sm:gap-1 sm:px-2 sm:py-2">
-            {navItems.map((item) => (
-              <MagneticButton
+          {navItems.map((item) => {
+            const isActive = activeSection === item.href.slice(1);
+            return (
+              <button
                 key={item.href}
-                strength={0.15}
+                type="button"
                 onClick={() => handleClick(item.href)}
+                className="relative appearance-none border-none bg-transparent p-0 outline-none focus:outline-none active:outline-none"
+                style={{
+                  WebkitTapHighlightColor: "transparent",
+                  WebkitTouchCallout: "none" as unknown as string,
+                }}
               >
-                <motion.div
-                  className={`relative rounded-full px-3 py-1.5 text-[10px] font-medium tracking-wider uppercase transition-colors duration-150 sm:px-4 sm:py-2 sm:text-[11px] ${
-                    activeSection === item.href.slice(1)
+                <div
+                  className={`relative rounded-full px-3 py-2 text-[10px] font-medium tracking-wider uppercase sm:px-4 sm:py-2 sm:text-[11px] ${
+                    isActive
                       ? "text-[#050505]"
-                      : "text-[#888] hover:text-[#ccc]"
+                      : "text-[#888] sm:hover:text-[#ccc]"
                   }`}
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
-                  {activeSection === item.href.slice(1) && (
+                  {isActive && (
                     <motion.div
                       layoutId="navPill"
                       className="absolute inset-0 rounded-full"
@@ -74,11 +102,15 @@ export default function Navbar() {
                       }}
                     />
                   )}
-                  <span className="relative z-10">{item.label}</span>
-                </motion.div>
-              </MagneticButton>
-            ))}
-          </div>
-        </motion.nav>
+                  <span className="relative z-10 pointer-events-none select-none">
+                    {item.label}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    </div>
   );
 }

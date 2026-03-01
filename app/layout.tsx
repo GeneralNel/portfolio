@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Syne, DM_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Navbar from "@/components/Navbar";
 
 const syne = Syne({
   variable: "--font-syne-var",
@@ -26,6 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,6 +44,7 @@ export default function RootLayout({
         <SmoothScroll>
           <div className="grain">{children}</div>
         </SmoothScroll>
+        <Navbar />
       </body>
     </html>
   );
