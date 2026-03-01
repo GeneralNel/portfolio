@@ -50,11 +50,10 @@ export default function Navbar() {
       style={{ width: "100vw", height: "100svh" }}
     >
       <nav
-        className="pointer-events-auto mb-8 sm:mb-8 max-w-[calc(100vw-1.5rem)]"
+        className="pointer-events-auto mb-8 sm:mb-8 max-w-[calc(100vw-1.5rem)] navbar-nav"
         style={{
           WebkitTapHighlightColor: "transparent",
           userSelect: "none",
-          WebkitUserSelect: "none" as unknown as string,
           touchAction: "manipulation",
         }}
       >
@@ -79,7 +78,6 @@ export default function Navbar() {
                 className="relative appearance-none border-none bg-transparent p-0 outline-none focus:outline-none active:outline-none"
                 style={{
                   WebkitTapHighlightColor: "transparent",
-                  WebkitTouchCallout: "none" as unknown as string,
                 }}
               >
                 <div

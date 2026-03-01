@@ -26,6 +26,15 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Navbar: prevent iOS callout and vendor-prefixed user-select
+     (kept in CSS to avoid TypeScript cast hacks in JSX) */
+  .navbar-nav,
+  .navbar-nav button {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
   }
 
   ::selection {
